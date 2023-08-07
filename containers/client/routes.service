@@ -1,0 +1,9 @@
+[Unit]
+Description=Setup default route.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/local/bin/setup-routes.sh
+
+[Install]
+WantedBy=multi-user.target

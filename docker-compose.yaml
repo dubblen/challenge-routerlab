@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+    router:
+        build: containers/router
+        hostname: router
+        tty: true
+        runtime: sysbox-runc
+        volumes:
+            - ./resolv-router.conf:/etc/resolv.conf
+        ports:
+            - "2222:22"
+            - "2223:2223"
+        networks:
+            internet:
+                priority: 100
+            clients:
+                priority: 10
+                ipv4_address: 10.10.0.2
+    client:
+        build: containers/client
+        hostname: client
+        tty: true
+        runtime: sysbox-runc
+        volumes:
+            - ./resolv-client.conf:/etc/resolv.conf
+        networks:
+            clients:
+                ipv4_address: 10.10.0.3
+networks:
+    internet:
+    clients:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 10.10.0.0/24
+                  gateway: 10.10.0.1

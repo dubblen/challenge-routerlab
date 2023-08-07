@@ -1,0 +1,9 @@
+[Unit]
+Description=Setup default firewall rules. SCENARIO_IS_READY.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/local/bin/setup-firewall.sh
+
+[Install]
+WantedBy=multi-user.target
